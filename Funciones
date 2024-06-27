@@ -1,0 +1,62 @@
+   #   +---------------------------------------------------------------+
+    #   |  #DE:                    | ERIKA NICOLLE CORREDOR MUÑOZ       |
+    #   |  #FICHA:                 | 2877795                            |
+    #   |  #PROGRAMA DE  FORMACION:| ANALISIS Y DESARROLLO DE SOFTWARE  |
+    #   |  #FECHA:                 | 09/05/2024                         |
+    #   |---------------------------------------------------------------|
+    #   |  #SENA, CENTRO DE BIOTECNOLOGIA AGROPECUARIA (CBA)            |
+    #   +---------------------------------------------------------------+
+
+# Se utiliza un bucle principal que actualiza los números aleatorios cada vez que el usuario elige ver los resultados nuevamente. Se añaden funciones para generar y mostrar los números y resultados.
+import random  # Importamos la biblioteca random para generar números aleatorios
+print("Numeros aleatorios:")
+
+def suma(num1, num2):  
+#    Calcula la suma de dos números.
+    return num1 + num2
+
+def resta(num1, num2):  
+    # Calcula la resta de dos números.
+    return num1 - num2
+
+def multiplicacion(num1, num2):  
+    # Calcula la multiplicación de dos números.
+    return num1 * num2
+
+def division(num1, num2):   
+    # Calcula la división de dos números.
+    if num2 != 0:
+        return num1 / num2
+    else:
+        return "Fallo: división por cero"
+
+def generar_numeros():
+    #Genera dos números aleatorios entre 1 y 100.
+    num1 = random.randint(1, 100)
+    num2 = random.randint(1, 100)
+    return num1, num2
+
+def mostrar_resultados(num1, num2):
+    #Muestra los resultados de las operaciones matemáticas.
+    print("\nNúmero 1:", num1)
+    print("Número 2:", num2)
+    print("\nLa suma de los números es:", suma(num1, num2))
+    print("\nLa resta de los números es:", resta(num1, num2))
+    print("\nLa división de los números es:", division(num1, num2))
+    print("\nLa multiplicación de los números es:", multiplicacion(num1, num2))
+    print("\n")
+
+while True:
+        num1, num2 = generar_numeros()
+        mostrar_resultados(num1, num2)
+        
+        resp = input("\nQuiere ver de nuevo los números ? (S/N): ").upper()
+        
+        if resp == "S":# Si el usuario desea continuar, llama a la función listab
+            print("Continua el ciclo")
+        else:
+            # Si el usuario no desea continuar, finaliza el programa
+            resp == "N"
+            print("Fin del programa")
+            break
+        
