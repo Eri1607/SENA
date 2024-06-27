@@ -1,0 +1,136 @@
+    #   +---------------------------------------------------------------+
+    #   |  #DE:                    | ERIKA NICOLLE CORREDOR MUÑOZ       |
+    #   |  #FICHA:                 | 2877795                            |
+    #   |  #PROGRAMA DE  FORMACION:| ANALISIS Y DESARROLLO DE SOFTWARE  |
+    #   |  #FECHA:                 | 06/06/2024                         |
+    #   |---------------------------------------------------------------|
+    #   |  #SENA, CENTRO DE BIOTECNOLOGIA AGROPECUARIA (CBA)            |
+    #   +---------------------------------------------------------------+
+    
+    #Programa de gestión de aprendices, con funcionalidades para ingresar, listar, actualizar y borrar aprendices, entre otras opciones.
+
+
+from colorama import Fore, Back,Style
+from os import system
+import msvcrt
+import sys
+
+
+usuarios = [] # Lista para almacenar los datos de los usuarios
+
+
+def menu():
+    while True:
+        print(Fore.BLUE + Back.BLACK + f"\nSENA Centro de Biotecnología Agropecuaria (CBA) ANALISIS Y DESARROLLO DE SOFTWARE (ADSO)\n")
+        print(Fore.BLUE + Back.BLACK + f"1. Ingresar a parametrizar")
+        print(Fore.BLUE + Back.BLACK + f"2. Ingreso de aprendiz")
+        print(Fore.BLUE + Back.BLACK + f"3. Lista de aprendices general")
+        print(Fore.BLUE + Back.BLACK + f"4. Listado de las fichas")
+        print(Fore.BLUE + Back.BLACK + f"5. Resultado de aprendices")
+        print(Fore.BLUE + Back.BLACK + f"6. Borrar aprendiz")
+        print(Fore.BLUE + Back.BLACK + f"7. Actualizar datos")
+        print(Fore.BLUE + Back.BLACK + f"0. Salir\n")
+        print(Fore.YELLOW + Back.BLACK + f"\nIngrese la opcion que desea ver:")
+        respuesta = None
+        while respuesta not in ["0", "1","2", "3", "4", "5", "6", "7",]:#Opcion numeros de respuesta
+            respuesta = msvcrt.getwch()# Leer la respuesta del usuario
+
+
+        if respuesta == "0":
+            print("Fin del programa")
+            sys.exit()
+        elif respuesta == "1":
+            usuarios.clear()  # Limpiar la lista de usuarios
+            system('cls')  # Limpiar la pantalla
+        elif respuesta == "2":
+            ingreso()#Ingresa usuarios o aprendices 
+        elif respuesta == "3":
+            system('cls')
+            lista_de_aprendices_gen()#Muestra la lilsta de aprendices general
+        elif respuesta == "4":
+            system('cls')
+            listado_ficha()#Muestra listado de ficha
+        elif respuesta == "5":
+            system('cls')
+            resultado_aprendices()#Muestra resultado de aprendices
+        elif respuesta == "6":
+            system('cls')
+            borrar()#borra el aprendiz que el usuario desea borrar
+        elif respuesta == "7":
+            system('cls')
+            actualizar()#Actualiza los datos del aprendiz segun desea el usuario
+
+
+def ingreso():#Ingresar datos requeridos
+    num_usuarios = int(input("\nIngrese la cantidad de usuarios: "))#Cantidad de usuarios requeridos
+    for i in range(num_usuarios):
+        nombre = input(f"Ingrese el nombre del usuario {i + 1}: ")
+        documento = input(f"Ingrese el documento del usuario {i + 1}: ")
+        ficha = input(f"Ingrese la ficha del usuario {i + 1}: ")
+        evaluacion = input(f"Ingrese la evaluación del usuario {i + 1}: ")
+        usuarios.append({"nombre": nombre, "documento": documento, "ficha": ficha, "evaluacion": evaluacion})
+    print()
+
+
+def lista_de_aprendices_gen():#Muestra lista de aprendices general
+    print(Fore.MAGENTA + f"\nLista de todos los aprendices:")
+    for usuario in usuarios:
+        print(f"- Nombre Aprendiz: {usuario['nombre']} - Documento: {usuario['documento']} - Ficha: {usuario['ficha']} - Evaluación: {usuario['evaluacion']}")#Imprime los datos registrados
+def listado_ficha():
+    fichas = set(usuario["ficha"] for usuario in usuarios)  # Obtener todas las fichas únicas
+
+
+    for ficha in fichas:
+        print(Fore.CYAN + f"\nAprendices de la ficha {ficha}:")
+        for usuario in usuarios:
+            if usuario["ficha"] == ficha:
+                print(f"- Nombre Aprendiz: {usuario['nombre']} - Documento: {usuario['documento']} - Evaluación: {usuario['evaluacion']}")
+
+
+def resultado_aprendices():#Muestra los resultados de los aprendices A o D
+    evaluacion_a = []
+    evaluacion_d = []
+    for usuario in usuarios:  
+        if usuario["evaluacion"].upper() == "A":
+            evaluacion_a.append(usuario)
+            nombre = usuario["nombre"],
+            documento = usuario["documento"],
+            ficha = usuario["ficha"],
+            evaluacion = usuario["evaluacion"]
+            print(Fore.GREEN+ f"\nNombre: {nombre}, Documento: {documento},ficha:  {ficha}, evaluacion: {evaluacion}", Style.  RESET_ALL)
+        elif usuario["evaluacion"].upper() == "D":
+            evaluacion_d.append(usuario)
+            for usuario in usuarios:
+                nombre = usuario["nombre"],
+                documento = usuario["documento"],
+                ficha = usuario["ficha"],
+                evaluacion = usuario["evaluacion"]
+                print(Fore.RED+ f"\nNombre: {nombre}, DOcumento: {documento},ficha:  {ficha}, evaluacion: {evaluacion}", Style.  RESET_ALL)
+
+
+def borrar():#Borra los aprendices que se solicita
+    lista_de_aprendices_gen()
+    documento_borrar = input("Ingrese el documento del aprendiz que desea borrar: ")
+    global usuarios
+    usuarios = [usuario for usuario in usuarios if usuario["documento"] != documento_borrar]
+    print(f"Aprendiz con documento {documento_borrar} ha sido eliminado.")
+
+
+def actualizar():
+    lista_de_aprendices_gen()
+    documento_actualizar = input("Ingrese el documento del aprendiz que desea actualizar: ")
+    for usuario in usuarios:
+        if usuario["documento"] == documento_actualizar:
+            nombre = input("Ingrese el nuevo nombre del aprendiz: ")
+            ficha = input("Ingrese la nueva ficha del aprendiz: ")
+            evaluacion = input("Ingrese la nueva evaluación del aprendiz: ")
+            usuario["nombre"] = nombre
+            usuario["ficha"] = ficha
+            usuario["evaluacion"] = evaluacion
+            print("\nDatos del aprendiz actualizados.")
+            return
+    print("No se encontró ningún aprendiz con el documento proporcionado.")
+
+
+if __name__ == "__main__":
+    menu()
